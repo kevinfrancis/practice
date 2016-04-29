@@ -26,15 +26,16 @@ def perm(s):
     visited = set([])
 
     for i in xrange(0, len(s)):
-        if s[i] in visited:
+        (head, tail) = (s[i], s[:i] + s[i+1:])
+        if head in visited:
             # In each level, same character does not 
             # occupy the first position twice
             continue
 
-        visited.add(s[i])
+        visited.add(head)
 
-        for tail in perm(s[:i] + s[i+1:]):
-            lst.append(s[i] + tail)
+        for tail_perm in perm(tail):
+            lst.append(s[i] + tail_perm)
 
     return lst
 
