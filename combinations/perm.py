@@ -7,7 +7,9 @@ import sys
 from itertools import product
 
 
-# Pick up character at each position
+# Use each character at first position
+# and append the permutations of all
+# the remaining characters
 def perm(s):
 
     if len(s) <= 1:
