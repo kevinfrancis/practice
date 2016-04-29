@@ -35,7 +35,7 @@ def perm(s):
         visited.add(head)
 
         for tail_perm in perm(tail):
-            lst.append(s[i] + tail_perm)
+            lst.append(head + tail_perm)
 
     return lst
 
