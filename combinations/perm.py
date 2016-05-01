@@ -2,7 +2,7 @@
 import sys, operator
 from math import factorial
 
-# Print all permutations of a string
+# Get all permutations of a string
 # with duplicates
 # Use each character at first position and attach to the 
 # front of each permutation of the rest of the string
@@ -38,6 +38,46 @@ def perm(s):
             lst.append(head + tail_perm)
 
     return lst
+
+
+# Print all permutations of a string (immutable: i.e., without swaps)
+def print_perms(s, prefix=''):
+
+    if len(s) == 0:
+        print(prefix)
+
+    visited = set([])
+
+    for i in xrange(0, len(s)):
+        if s[i] not in visited:
+            print_perms(s[:i] + s[i+1:], prefix + s[i])
+            visited.add(s[i])
+
+
+# Print all permutations of a string (Space efficient version)
+# Mutable - By Converting to a list first, and
+#           swapping instead of creating copies of strings
+def print_perms2(s):
+
+    list_of_chars = list(s)
+
+    def swap(l, i, j):
+        (l[i], l[j]) = (l[j], l[i])
+
+    def _perm_print(prefix_len):
+        if len(list_of_chars) == prefix_len:
+            print(''.join(list_of_chars))
+
+        visited = set([])
+
+        for i in xrange(prefix_len, len(list_of_chars)):
+            if list_of_chars[i] not in visited:
+                visited.add(list_of_chars[i])
+                swap(list_of_chars, i, prefix_len)
+                _perm_print(prefix_len + 1)
+                swap(list_of_chars, i, prefix_len)
+
+    _perm_print(0)
 
 
 # Naive permutation function (Cannot handle duplicates)
@@ -80,3 +120,4 @@ if __name__ == '__main__':
     result = perm(s)
     print('Permutation (%s) = %s' % (s, result))
     test_perms(s, result)
+    print_perms2(list(s))
