@@ -22,22 +22,12 @@ def perm(s):
     if len(s) < 1:
         return [s]
 
-    lst = []
-    visited = set([])
+    # Get a dictionary of Key: Char, Value: Index of rightmost occurrence
+    unique_char_dict = dict((char, pos) for (pos, char) in enumerate(s))
 
-    for i in xrange(0, len(s)):
-        (head, tail) = (s[i], s[:i] + s[i+1:])
-        if head in visited:
-            # In each level, same character does not 
-            # occupy the first position twice
-            continue
-
-        visited.add(head)
-
-        for tail_perm in perm(tail):
-            lst.append(head + tail_perm)
-
-    return lst
+    return [(char + tail_perm)
+            for char, i in unique_char_dict.iteritems()
+            for tail_perm in perm(s[:i] + s[i+1:])]
 
 
 # Print all permutations of a string (immutable: i.e., without swaps)
