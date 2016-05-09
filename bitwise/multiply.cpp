@@ -17,16 +17,16 @@ static inline uint32_t add(uint32_t x, uint32_t y)
         sum_bit = x_bit ^ y_bit ^ carry_bit;
         carry_bit = (((x_bit & y_bit) == 0) ? (carry_bit & (x_bit | y_bit)): 1);
 
-		if (sum_bit) {
-			result |= result_mask;
-		}
+        if (sum_bit) {
+            result |= result_mask;
+        }
 
-		result_mask <<= 1;
+        result_mask <<= 1;
     }
 
-	if (carry_bit) {
-		result |= result_mask;
-	}
+    if (carry_bit) {
+        result |= result_mask;
+    }
 
     return result;
 }
