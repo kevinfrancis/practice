@@ -22,8 +22,14 @@
 bool is_palindrome(int x)
 {
     int reversed = 0;
-
     x = std::abs(x);
+
+    if (x == 0)
+        return true;
+
+    // remove all Least significant 0 digits
+    while (x % 10 == 0)
+        x /= 10;
 
     while (reversed < x) {
         reversed = (10 * reversed) + (x % 10);
