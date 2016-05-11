@@ -31,14 +31,11 @@ bool is_palindrome(int x)
     while (x % 10 == 0)
         x /= 10;
 
-    while (reversed < x) {
+    for (; x > reversed; x /= 10)
         reversed = (10 * reversed) + (x % 10);
-        if (reversed >= x)  // Needed for even-length case
-            break;
-        x /= 10;
-    }
 
-    return (reversed == x);
+    return (reversed == x || 
+            reversed/10 == x);
 }
 
 int main(int argc, char* argv[])
