@@ -7,8 +7,8 @@
 static inline uint32_t add(uint32_t x, uint32_t y)
 {
     uint32_t result = 0;
+    uint32_t result_mask = 1;
     int sum_bit = 0, carry_bit = 0;
-    int lsh = 0;
     
     for (; x | y; x >>= 1, y >>= 1) {
         uint32_t x_bit = x & 1;
@@ -17,10 +17,16 @@ static inline uint32_t add(uint32_t x, uint32_t y)
         sum_bit = x_bit ^ y_bit ^ carry_bit;
         carry_bit = (((x_bit & y_bit) == 0) ? (carry_bit & (x_bit | y_bit)): 1);
 
-        result |= (sum_bit << lsh++);
+        if (sum_bit) {
+            result |= result_mask;
+        }
+
+        result_mask <<= 1;
     }
 
-    result |= carry_bit << lsh;
+    if (carry_bit) {
+        result |= result_mask;
+    }
 
     return result;
 }
