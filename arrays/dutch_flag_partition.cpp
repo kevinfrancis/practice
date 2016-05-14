@@ -3,12 +3,12 @@
 
 using namespace std;
 
-void print_vector(vector<int> &v)
+template <typename T>
+void print_vector(vector<T> &v)
 {
-    for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+    for (typename vector<T>::iterator it = v.begin(); it != v.end(); it++) {
         cout << *it << " ";
     }
-
     cout << endl;
 }
 
@@ -82,6 +82,36 @@ void partition(int pivot_index, vector<int> &v)
     }
 }
 
+
+/**
+ * Variant exercise of the partition algorithm
+ */
+typedef enum {
+    FIRST_COLOR,
+    RED = FIRST_COLOR,
+    BLUE,
+    GREEN,
+    YELLOW,
+    NUM_COLORS
+} Color;
+
+void partition_colors(vector<Color> &v)
+{
+    int completed = -1;
+    
+    for (int c = FIRST_COLOR; c < NUM_COLORS; c++) {
+        // Traverse from right to left.  Move matching color to left side
+        int i = v.size() - 1;
+        while (i > completed) {
+            if (v[i] == c) {
+                swap(v[i], v[++completed]);
+            } else {
+                i--;
+            }
+        }
+    }
+}
+
 int main(int argc, char* argv[])
 {
     int a[] = {5,1,3,2,1,3,2,5,6,1,4,5,1,3};
@@ -92,4 +122,12 @@ int main(int argc, char* argv[])
     print_vector(v);
     partition(pivot_index, v);
     print_vector(v);
+
+    Color colors[] = {RED, BLUE, GREEN, YELLOW, BLUE, RED,
+                      YELLOW, RED, GREEN, YELLOW, GREEN, YELLOW,
+                      GREEN, BLUE, RED, BLUE, GREEN};
+    vector<Color> color_vector(colors, colors + sizeof(colors)/sizeof(colors[0]));
+    print_vector<Color>(color_vector);
+    partition_colors(color_vector);
+    print_vector<Color>(color_vector);
 }
