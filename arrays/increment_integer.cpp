@@ -13,7 +13,8 @@ void increment_integer(std::vector<int>& v)
     int carry = 1;
 
     // The usual sum & carry addition operation
-    for (auto it = v.rbegin(); it != v.rend(); it++) {
+    // auto "it" is of type  "vector<int>::reverse_iterator"
+    for (auto it = v.rbegin(); (carry > 0) && it != v.rend(); it++) {
         int sum = *it + carry;
         *it = (sum % 10);
         carry = (sum / 10);
