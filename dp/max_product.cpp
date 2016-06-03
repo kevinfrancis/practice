@@ -12,22 +12,22 @@ int max_product(std::vector<int>& v)
     int max_product = INT_MIN;
 
     for (int i = 0; i < v.size(); i++) {
-		if (v[i] == 0) {
+        if (v[i] == 0) {
             shorter = longer = 1; // reset
             max_product = std::max(max_product, v[i]);
         } else {
-			longer *= v[i];
+            longer *= v[i];
 
-			if (longer > 0) {
-				shorter = v[i];
-			} else { // longer < 0
-				shorter *= v[i];
-				if (shorter < 0)
-					shorter = v[i];
-			}
-			max_product = std::max(max_product,
-								   std::max(shorter, longer));
-		}
+            if (longer > 0) {
+                shorter = v[i];
+            } else { // longer < 0
+                shorter *= v[i];
+                if (shorter < 0)
+                    shorter = v[i];
+            }
+            max_product = std::max(max_product,
+                                   std::max(shorter, longer));
+        }
     }
 
     return max_product;
@@ -44,17 +44,17 @@ void disp_vector(std::vector<int>& v)
 
 int main()
 {
-	for (std::string line; std::getline(std::cin, line);) {
-		std::stringstream stream(line);
-		std::vector<int> v;
-		while (not stream.eof()) {
-			int x;
-			stream >> x;
-			v.push_back(x);
-		}
-		//disp_vector(v);
-		std::cout << max_product(v) << std::endl;
-	}
+    for (std::string line; std::getline(std::cin, line);) {
+        std::stringstream stream(line);
+        std::vector<int> v;
+        while (not stream.eof()) {
+            int x;
+            stream >> x;
+            v.push_back(x);
+        }
+        //disp_vector(v);
+        std::cout << max_product(v) << std::endl;
+    }
 
 #if 0
     //int arr[] = {1, -5, 6, -2, 3};
