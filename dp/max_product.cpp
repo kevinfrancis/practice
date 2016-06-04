@@ -11,19 +11,19 @@ int max_product(std::vector<int>& v)
     int longer = 1;
     int max_product = INT_MIN;
 
-    for (int i = 0; i < v.size(); i++) {
-        if (v[i] == 0) {
+    for (auto i : v) {
+        if (i == 0) {
             shorter = longer = 1; // reset
-            max_product = std::max(max_product, v[i]);
+            max_product = std::max(max_product, i);
         } else {
-            longer *= v[i];
+            longer *= i;
 
             if (longer > 0) {
-                shorter = v[i];
+                shorter = i;
             } else { // longer < 0
-                shorter *= v[i];
+                shorter *= i;
                 if (shorter < 0)
-                    shorter = v[i];
+                    shorter = i;
             }
             max_product = std::max(max_product,
                                    std::max(shorter, longer));
@@ -35,8 +35,8 @@ int max_product(std::vector<int>& v)
 
 void disp_vector(std::vector<int>& v)
 {
-    for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++) {
-        std::cout << *it << " ";
+    for (auto i : v) {
+        std::cout << i << " ";
     }
     std::cout << std::endl;
 }
