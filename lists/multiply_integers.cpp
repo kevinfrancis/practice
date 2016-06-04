@@ -27,6 +27,8 @@ find_product(std::forward_list<int>& x, std::forward_list<int>& y)
 {
     std::forward_list<int> *z_ptr = new std::forward_list<int>;
     std::forward_list<int> &z = *z_ptr;
+
+    // start with a zero at beginning
     z.insert_after(z.before_begin(), 0);
 
     // return early if one of the items is 0
