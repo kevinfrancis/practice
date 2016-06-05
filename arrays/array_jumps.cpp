@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <utility>
+#include <stack>
 
 /**
  * Given a vector v where
@@ -22,9 +24,37 @@ bool jump_test(std::vector<int>& v)
     return (last_pos == 0);
 }
 
+
+/**
+ * Variant: Find the minimum number of jumps required
+ * Time complexity: O(n)
+ * Space complexity: O(n)
+ */
+int min_jumps(std::vector<int>& v)
+{
+    std::stack<int> stk;  // stack of indexes
+    stk.push(v.size() - 1);
+
+    for (int i = v.size() - 2; i >= 0; i--) {
+        int last_popped = -1;
+        while ((stk.top() != v.size() - 1) and 
+               (i + v[i] >= stk.top())) {
+            last_popped = stk.top();
+            stk.pop();
+        }
+        if (last_popped != -1) {
+            stk.push(last_popped);
+        }
+        stk.push(i);
+    }
+
+    return stk.size() - 1;
+}
+
 int main()
 {
-    std::vector<int> v = {5, 0, 0, 0, 0, 0};
-    std::cout << jump_test(v) << std::endl;
+    std::vector<int> v = {2, 1, 2, 1, 2, 1};
+    std::cout << "jump possible = " << jump_test(v) << std::endl;
+    std::cout << "min jumps     = " << min_jumps(v) << std::endl;
     return 0;
 }
