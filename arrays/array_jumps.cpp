@@ -37,23 +37,27 @@ int min_jumps(std::vector<int>& v)
 
     for (int i = v.size() - 2; i >= 0; i--) {
         int last_popped = -1;
-        while ((stk.top() != v.size() - 1) and 
+        while (!stk.empty() and 
                (i + v[i] >= stk.top())) {
             last_popped = stk.top();
             stk.pop();
         }
-        if (last_popped != -1) {
+        if (last_popped != -1)
             stk.push(last_popped);
-        }
-        stk.push(i);
+
+        if (i + v[i] >= stk.top())
+            stk.push(i);
     }
 
-    return stk.size() - 1;
+    if (stk.top() == 0)
+        return stk.size() - 1;
+
+    return -1;
 }
 
 int main()
 {
-    std::vector<int> v = {2, 1, 2, 1, 2, 1};
+    std::vector<int> v = {2, 1, 2, 1, 2, 1, 1};
     std::cout << "jump possible = " << jump_test(v) << std::endl;
     std::cout << "min jumps     = " << min_jumps(v) << std::endl;
     return 0;
