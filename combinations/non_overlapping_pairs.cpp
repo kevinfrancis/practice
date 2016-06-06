@@ -23,11 +23,12 @@ void print_segments(std::vector<int>& v, std::vector<bool>& breaks)
     std::cout << "(";
     for (int i = 0; i < v.size(); i++) {
         std::cout << v[i];
-        if (breaks[i] == true) {
+		if (i == breaks.size()) {
+			std::cout << ")" << std::endl;
+		} else if (breaks[i] == true) {
             std::cout << ")(";
-        }    
+        }
     }
-    std::cout << ")" << std::endl;
 }
 
 
@@ -58,7 +59,7 @@ void print_non_overlapping_pairs(std::vector<int>& v)
 
 int main()
 {
-    int arr[] = {1, 2, 3, 4, 5};
+    int arr[] = {1, 2, 3, 4, 5, 6};
     std::vector<int> v(arr, arr + sizeof(arr)/sizeof(arr[0]));
     print_non_overlapping_pairs(v);
 
