@@ -39,9 +39,9 @@ void print_segments(std::vector<int>& v, std::vector<bool>& breaks)
 void print_vec(std::vector<int>& v, std::vector<bool>& breaks, int start_offset)
 {
     if (start_offset < breaks.size()) {
-        breaks[start_offset] = 0;
+        breaks[start_offset] = false;
         print_vec(v, breaks, start_offset + 1);
-        breaks[start_offset] = 1;
+        breaks[start_offset] = true;
         print_vec(v, breaks, start_offset + 1);
     } else {
         print_segments(v, breaks);
