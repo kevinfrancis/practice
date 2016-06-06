@@ -23,9 +23,9 @@ void print_segments(std::vector<int>& v, std::vector<bool>& breaks)
     std::cout << "(";
     for (int i = 0; i < v.size(); i++) {
         std::cout << v[i];
-		if (i == breaks.size()) {
-			std::cout << ")" << std::endl;
-		} else if (breaks[i] == true) {
+        if (i == breaks.size()) {
+            std::cout << ")" << std::endl;
+        } else if (breaks[i] == true) {
             std::cout << ")(";
         }
     }
