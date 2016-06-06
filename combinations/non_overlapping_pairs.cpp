@@ -22,7 +22,7 @@ void print_segments(std::vector<int>& v, std::vector<bool>& breaks)
 {
     std::cout << "(";
     for (int i = 0; i < v.size(); i++) {
-        std::cout << i;
+        std::cout << v[i];
         if (breaks[i] == true) {
             std::cout << ")(";
         }    
