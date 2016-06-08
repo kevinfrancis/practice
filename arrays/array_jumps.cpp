@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <utility>
-#include <stack>
 
 /**
  * Given a vector v where
@@ -27,7 +25,7 @@ bool jump_test(std::vector<int>& v)
 /**
  * Variant: Find the minimum number of jumps required
  * Time complexity: O(n)
- * Space complexity: O(n)
+ * Space complexity: O(1)
  */
 int min_jumps(std::vector<int>& v)
 {
