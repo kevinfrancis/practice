@@ -9,16 +9,16 @@
  */
 bool jump_test(std::vector<int>& v)
 {
-	int max_reach = 0;
+    int max_reach = 0;
 
-	for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
-		max_reach = std::max(max_reach, i + v[i]);
-		if (max_reach >= v.size() - 1) {
-			break;
-		}
-	}
+    for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
+        max_reach = std::max(max_reach, i + v[i]);
+        if (max_reach >= v.size() - 1) {
+            break;
+        }
+    }
 
-	return (max_reach >= v.size() - 1);
+    return (max_reach >= v.size() - 1);
 }
 
 
@@ -29,20 +29,20 @@ bool jump_test(std::vector<int>& v)
  */
 int min_jumps(std::vector<int>& v)
 {
-	int max_reach = 0;
-	int min_jumps = 0;
+    int max_reach = 0;
+    int min_jumps = 0;
 
-	for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
-		if (max_reach < i + v[i]) {
-			max_reach = i + v[i];
-			min_jumps++;
-		}
-		if (max_reach >= v.size() - 1) {
-			break;
-		}
-	}
+    for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
+        if (max_reach < i + v[i]) {
+            max_reach = i + v[i];
+            min_jumps++;
+        }
+        if (max_reach >= v.size() - 1) {
+            break;
+        }
+    }
 
-	return (max_reach >= v.size() - 1) ? min_jumps : -1;
+    return (max_reach >= v.size() - 1) ? min_jumps : -1;
 }
 
 int main()
