@@ -11,17 +11,16 @@
  */
 bool jump_test(std::vector<int>& v)
 {
-    int last_pos = v.size() - 1;
+	int max_reach = 0;
 
-    // Traverse backwards from the 2nd last element
-    for (int i = v.size() - 2; i >= 0; i--) {
-        // if last_pos is reachable from i, update last_pos
-        if (i + v[i] >= last_pos) {
-            last_pos = i;
-        }
-    }
+	for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
+		max_reach = std::max(max_reach, i + v[i]);
+		if (max_reach >= v.size() - 1) {
+			break;
+		}
+	}
 
-    return (last_pos == 0);
+	return (max_reach >= v.size() - 1);
 }
 
 
@@ -32,32 +31,25 @@ bool jump_test(std::vector<int>& v)
  */
 int min_jumps(std::vector<int>& v)
 {
-    std::stack<int> stk;  // stack of indexes
-    stk.push(v.size() - 1);
+	int max_reach = 0;
+	int min_jumps = 0;
 
-    for (int i = v.size() - 2; i >= 0; i--) {
-        int last_popped = -1;
-        while (!stk.empty() and 
-               (i + v[i] >= stk.top())) {
-            last_popped = stk.top();
-            stk.pop();
-        }
-        if (last_popped != -1)
-            stk.push(last_popped);
+	for (int i = 0; i < v.size() - 1 and i <= max_reach; i++) {
+		if (max_reach < i + v[i]) {
+			max_reach = i + v[i];
+			min_jumps++;
+		}
+		if (max_reach >= v.size() - 1) {
+			break;
+		}
+	}
 
-        if (i + v[i] >= stk.top())
-            stk.push(i);
-    }
-
-    if (stk.top() == 0)
-        return stk.size() - 1;
-
-    return -1;
+	return (max_reach >= v.size() - 1) ? min_jumps : -1;
 }
 
 int main()
 {
-    std::vector<int> v = {2, 1, 2, 1, 2, 1, 1};
+    std::vector<int> v = {3, 1, 2, 0, 1};
     std::cout << "jump possible = " << jump_test(v) << std::endl;
     std::cout << "min jumps     = " << min_jumps(v) << std::endl;
     return 0;
