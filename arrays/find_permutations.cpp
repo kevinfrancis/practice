@@ -7,10 +7,10 @@
  */
 void populate_char_count(std::string& a, std::map<char, int>& char_count)
 {
-    for (std::string::iterator it  = a.begin(); it != a.end(); it++) {
-        std::map<char, int>::iterator map_it = char_count.find(*it);
+    for (char c: a) {
+        std::map<char, int>::iterator map_it = char_count.find(c);
         if (map_it == char_count.end()) {
-            char_count[*it] = 1;
+            char_count[c] = 1;
         } else {
             ++map_it->second; // just increment value
         }
@@ -82,9 +82,9 @@ std::vector<int> find_permutations(std::string s, std::string a)
 
 void print_locations(std::string& s, int length, const std::vector<int> &locations)
 {
-    for (std::vector<int>::const_iterator it = locations.begin(); it != locations.end(); it++) {
-        std::string sub_str(s, *it, length);
-        std::cout << "Location: " << *it << " substring: " << sub_str << std::endl;
+    for (int i: locations) {
+        std::string sub_str(s, i, length);
+        std::cout << "Location: " << i << " substring: " << sub_str << std::endl;
     }
 }
 
