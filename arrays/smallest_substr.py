@@ -18,7 +18,7 @@ def smallest_substr(a, b):
     pending_set = set(b)  # Set of chars yet to be seen in window
 
     j = 0
-    smallest_start, smallest_end = (0, len(a))
+    (smallest_start, smallest_end) = (0, len(a))
 
     for i in xrange(len(a)):
         if a[i] not in pending_count:
@@ -36,16 +36,12 @@ def smallest_substr(a, b):
         if j - i < smallest_end - smallest_start + 1 and len(pending_set) == 0:
             (smallest_start, smallest_end) = (i, j-1)
 
-        if j == len(a):  # No solution for current window
-            break
-
         pending_count[a[i]] += 1 # Finally, exclude character for upcoming window
         if pending_count[a[i]] > 0:
             pending_set.update(a[i])
 
     if smallest_end == len(a):
         return None
-
 
     return a[smallest_start:smallest_end+1]
 
