@@ -46,8 +46,53 @@ def smallest_substr(a, b):
     return a[smallest_start:smallest_end+1]
 
 
+# Find smallest substring in s that has all characters from pat 
+# in the same order as they appear in pat.
+# Characters in pat are all unique (Simpler version)
+def smallest_sequential_substr(s, pat):
+    if len(s) < len(pat):
+        return None
+
+    (smallest_start, smallest_end) = (0, len(s))
+    pat_set = set(pat)
+    win_start = 0
+    expected_pos = 0
+
+    for i in xrange(len(s)):
+        if s[i] not in pat_set:
+            continue
+
+        if s[i] != pat[expected_pos]:
+            expected_pos = 0
+            if s[i] != pat[0]:
+                # If this is not the first char in pat,
+                # start afresh from next character
+                continue
+
+        # Start fresh window if expected_pos is 0
+        if expected_pos == 0:
+            win_start = i
+
+        # Progress to next character in pat
+        expected_pos += 1
+
+        # Are we finished with all characters in pat ?
+        if expected_pos == len(pat):
+            # Then update smallest window
+            if i - win_start < smallest_end - smallest_start:
+                (smallest_start, smallest_end) = (win_start, i)
+            expected_pos = 0
+
+    # If smallest_end never got changed, there was no window we could find.
+    # smallest_end would then be equal to len(s) as we initialized it.
+    if smallest_end == len(s):
+        return None
+
+    return s[smallest_start:smallest_end+1]
+
 def main():
-    print(smallest_substr(sys.argv[1], sys.argv[2]))
+    #print(smallest_substr(sys.argv[1], sys.argv[2]))
+    print(smallest_sequential_substr(sys.argv[1], sys.argv[2]))
 
 
 if __name__ == '__main__':
