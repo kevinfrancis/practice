@@ -31,10 +31,25 @@
       0       -5      35
 -9   -5        0
      45       -9      45
+
+
+-2 -2 -2 -2 -2 -2
+ x   max_p   min_p   result
+-2    -2      -2       -2
+-2    -2      -2            # swap max_p, min_p
+       4      -2        4
+-2    -2       4            # swap max_p, min_p
+       4      -8        4
+-2    -8       4
+       16     -8       16
+-2    -8      16
+       16    -32       16
+-2    -32     16
+       64    -32       64
+      
 '''
 
 def max_product(a):
-
     result = a[0]
     (max_p, min_p) = (a[0], a[0])
 
@@ -44,7 +59,6 @@ def max_product(a):
 
         max_p = max(x, max_p * x)
         min_p = min(x, min_p * x)
-
         result = max(result, max_p)
 
     return result
@@ -53,3 +67,5 @@ def max_product(a):
 print(max_product([-1, 0]))
 print(max_product([-5,-6, 0, 5, 7]))
 print(max_product([5, 7, 0, -5, -9]))
+print(max_product([0, -1, 0, -2]))
+print(max_product([-2, -2, -2, -2, -2, -2]))
