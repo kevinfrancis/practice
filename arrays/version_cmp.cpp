@@ -1,27 +1,26 @@
 #include <iostream>
 
 /**
- *  Read next integer from string, starting from the given offset
- *  Update offset to new position
- *  If offset is already the end of the string, then return negative
+ * Read next integer starting from ptr
+ * Move pointer as the integer is being read
  */
-int read_int(const char* s, int& offset)
+int read_int(char const **ptr)
 {
 	// If we have already reached end of character, return negative number
-	if (s[offset] == '\0') {
+	if (**ptr == '\0') {
 		return -1;
 	}
 
 	int num = 0;
 
-	while (s[offset] != '.' && s[offset] != '\0') {
+	while (**ptr != '.' && **ptr != '\0') {
 		num *= 10;
-		num += s[offset] - '0';
-		offset++;
+		num += **ptr - '0';
+		(*ptr)++;
 	}
 
-	if (s[offset] == '.') {
-		offset++;
+	if (**ptr == '.') {
+		(*ptr)++;
 	}
 
 	return num;
@@ -35,12 +34,13 @@ int read_int(const char* s, int& offset)
  */
 int version_compare(const char* a, const char* b)
 {
-	int a_offset = 0, b_offset = 0;
+	char const **a_ptr = &a;
+	char const **b_ptr = &b;
 
 	while (true) {
 
-		int a_num = read_int(a, a_offset);
-		int b_num = read_int(b, b_offset);
+		int a_num = read_int(a_ptr);
+		int b_num = read_int(b_ptr);
 
 		// Equal
 		if (a_num < 0 && b_num < 0)
