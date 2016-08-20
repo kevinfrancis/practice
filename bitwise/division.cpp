@@ -6,6 +6,8 @@
 #define UPPER32(x) ((x) >> 32)
 #define LOWER32(x) ((x) & 0xffffffff)
 
+#define GET_BIT(x, i) (((x) >> (i)) & 1)
+
 static inline uint64_t
 extract_bits(uint64_t x, int lbit, int rbit)
 {
@@ -75,27 +77,23 @@ uint64_t div_64_by_8_v2(uint64_t number, uint8_t divisor)
  *   1
  *  
  */
-uint32_t divide(uint32_t p, uint32_t q)
+uint32_t divide(uint32_t x, uint32_t y)
 {
-    uint32_t remainder = 0;
     uint32_t quotient = 0;
+    uint32_t remainder = 0;
 
-    // Traverse bits from right to left
     for (int i = 31; i >= 0; i--) {
-        int bit_i = (p >> i) & 1;
-        int quotient_bit = 0;
-        remainder = (remainder << 1) | bit_i;
-        if (remainder >= q) {
-            quotient_bit = 1;
-            remainder -= q;
+        quotient <<= 1;
+        remainder = (remainder << 1) | GET_BIT(x, i);
+        
+        if (y <= remainder) {
+            quotient |= 1;
+            remainder -= y;
         }
-
-        quotient = (quotient << 1) | quotient_bit;
     }
 
     return quotient;
 }
-
 
 int main(int argc, char* argv[])
 {
