@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <mutex>
 
 template <typename T>
 class ListNode {
@@ -18,6 +19,7 @@ template <typename T>
 class LinkedList {
 
     std::shared_ptr< ListNode<T> > head, tail;
+    std::mutex list_mutex;
 
 public:
     LinkedList(): head(nullptr), tail(nullptr) {}
@@ -26,6 +28,7 @@ public:
     void remove(T _x) {
 
         if (head->x == _x) {
+            std::lock_guard<std::mutex> guard(list_mutex);
             if (tail == head) {
                 tail = head->next;
             }
@@ -35,6 +38,7 @@ public:
 
         for (auto tmp = head; tmp->next != nullptr; tmp = tmp->next) {
             if (tmp->next->x == _x) {
+                std::lock_guard<std::mutex> guard(list_mutex);
                 if (tmp->next == tail) {
                     tail = tmp;
                 }
@@ -50,6 +54,8 @@ public:
         std::cout << "reversing list" << std::endl;
         if (head == nullptr)
             return;
+
+        std::lock_guard<std::mutex> guard(list_mutex);
 
         tail = head;
 
@@ -69,6 +75,8 @@ public:
     void append(T _x) {
         auto new_node = std::make_shared< ListNode<T> >(ListNode<T>(_x));
 
+        std::lock_guard<std::mutex> guard(list_mutex);
+
         if (tail == nullptr) {
             head = tail = new_node;
         } else {
@@ -86,11 +94,10 @@ public:
             return;
         }
 
-        std::shared_ptr< ListNode<T> > node = head;
-        while (node) {
+        for (auto node = head; node != nullptr; node = node->next) {
             std::cout << node->x << " ";
-            node = node->next;
         }
+
         std::cout << std::endl;
     }
 };
