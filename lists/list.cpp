@@ -22,6 +22,7 @@ class LinkedList {
 public:
     LinkedList(): head(nullptr), tail(nullptr) {}
 
+    /** Remove first list node that matches value */
     void remove(T _x) {
 
         if (head->x == _x) {
@@ -43,6 +44,7 @@ public:
         }
     }
 
+    /** Reverse all the nodes in the linked list */
     void reverse() {
 
         std::cout << "reversing list" << std::endl;
@@ -63,8 +65,9 @@ public:
         }
     }
 
+    /** Append value to the tail of the linked list */
     void append(T _x) {
-        auto new_node = std::shared_ptr< ListNode<T> >(new ListNode<T>(_x));
+        auto new_node = std::make_shared< ListNode<T> >(ListNode<T>(_x));
 
         if (tail == nullptr) {
             head = tail = new_node;
@@ -74,6 +77,7 @@ public:
         }
     }
 
+    /** print all the values in the linked list from head to tail */
     void print() {
         std::cout << "LinkedList: ";
 
