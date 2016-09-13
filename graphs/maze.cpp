@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include "grid_common.h"
 
 /**
  * Maze solver
@@ -9,17 +10,6 @@
  * Given a start coordinate & end coordinate (both 0s), find if a path exists from start to end
  * Uses DFS
  */
-
-struct Pos {
-    int x;
-    int y;
-};
-
-bool operator==(const Pos& lhs, const Pos& rhs)
-{
-    return (lhs.x == rhs.x and lhs.y == rhs.y);
-}
-
 template <unsigned long _rows, unsigned long _cols>
 std::vector<Pos> solve_maze(std::array< std::array<int, _cols>, _rows>& maze, const Pos& start, const Pos& end)
 {
@@ -69,17 +59,6 @@ static bool _solve_maze(std::array< std::array<int, _cols>, _rows>& maze, const 
     return false;
 }
 
-template <unsigned long _rows, unsigned long _cols>
-void print_maze(std::array<std::array<int, _cols>, _rows>& maze)
-{
-    for (auto& row: maze) {
-        for (auto& val: row) {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 void print_path(std::vector<Pos>& path)
 {
     for (auto& pos: path) {
@@ -99,7 +78,7 @@ int main()
         }
     };
     
-    print_maze<4, 4>(maze);
+    print_grid<4, 4>(maze);
 
     std::vector<Pos> path = solve_maze<4, 4>(maze, {0,0}, {3,3});
     print_path(path);
