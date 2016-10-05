@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import sys
+
 # From Cracking the Coding interview
 # Given
 #  maze  r rows & c cols.  maze[i][j] = { 0, if cell is traversable, 
@@ -20,6 +22,7 @@ def find_path(maze):
     start_cell = (0, 0)
     visited_set = set([])
 
+    # Core func (DFS)
     def _find_path_from(end_cell):
         (i, j) = end_cell
         if i < 0 or j < 0 or maze[i][j] == 1 or (i,j) in visited_set: # not traversable
@@ -31,29 +34,29 @@ def find_path(maze):
         if start_cell == end_cell: # destination cell
             return True
 
-        if _find_path_from((i, j-1)): # try from left neighbor
-            path.append((i,j-1))
-            maze[i][j-1] = 2
-            return True
-
-        if _find_path_from((i-1, j)): # try from top neighbor
-            path.append((i-1, j))
-            return True
+        for prev_cell in [(i, j-1), (i-1, j)]: # find path from top & left adj cells
+            if _find_path_from(prev_cell):
+                path.append(prev_cell)
+                return True
 
         return False
 
+    # Call inner func that finds path using DFS
     if _find_path_from((r-1, c-1)) == True:
         path.append((r-1, c-1))
         return path
 
-    return None
+    return path
 
 def main():
     maze = [[0, 0, 0, 0],
-            [1, 0, 0, 0],
-            [0, 0, 0, 1],
+            [1, 1, 1, 0],
+            [0, 0, 0, 0],
             [0, 0, 0, 0]]
     path = find_path(maze)
+    if path is None:
+        print('No path found')
+        sys.exit(0)
     print(path)
 
     # Mark cells in path as 2 for easy viewing
