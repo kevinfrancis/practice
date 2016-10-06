@@ -13,6 +13,24 @@ class Node:
 # Return the head of the linked list (or None if root is None)
 def tree_to_list(tree_root):
 
+    # A pair consists of List's first & last nodes
+    # e.g. left_pair = (left_list's first, left_list's last)
+    def _merge(left_pair, right_pair):
+        if left_pair == (None, None):
+            return right_pair
+
+        if right_pair == (None, None):
+            return left_pair
+
+        (left_first, left_last) = left_pair
+        (right_first, right_last) = right_pair
+
+        left_last.right = right_first
+        right_first.left = left_last
+
+        return (left_first, right_last)
+
+
     # Converts tree into a doubly linked list
     # And returns (first, last) pair of the linked list. Or (None, None) if head is None
     def _to_list(root):
@@ -20,20 +38,11 @@ def tree_to_list(tree_root):
         if root is None:
             return (None, None)
 
-        (left_first, left_last) = _to_list(root.left)
-        (right_first, right_last) = _to_list(root.right)
+        left_pair = _to_list(root.left)
+        right_pair = _to_list(root.right)
 
-        first = last = root
-
-        if left_last:
-            left_last.right = root
-            root.left = left_last
-            first = left_first
-
-        if right_first:
-            right_first.left = root
-            root.right = right_first
-            last = right_last
+        (first, last) = _merge(left_pair, (root, root))
+        (first, last) = _merge((first, last), right_pair)
 
         return (first, last)
 
