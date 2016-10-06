@@ -13,7 +13,7 @@ class Node:
 # Return the head of the linked list (or None if root is None)
 def tree_to_list(tree_root):
 
-    # Converts tree with root "n" to a linked list
+    # Converts tree into a doubly linked list
     # And returns (first, last) pair of the linked list. Or (None, None) if head is None
     def _to_list(root):
 
@@ -58,11 +58,17 @@ def main():
 
     list_head = tree_to_list(n3)
 
-    # printing list
+    print('printing list forward')
     node = list_head
     while node is not None:
         print(node.value)
         node = node.right
+
+    print('printing list backwards')
+    node = n6
+    while node is not None:
+        print(node.value)
+        node = node.left
 
 if __name__ == '__main__':
     main()
