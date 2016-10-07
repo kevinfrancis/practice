@@ -21,12 +21,10 @@ def get_paren_exps(n):
         if l < n:
             s[i] = '('
             f(i+1, l+1, r)
-            s[i] = ''
 
         if r < l:
             s[i] = ')'
             f(i+1, l, r+1)
-            s[i] = ''
 
     f(0, 0, 0)
     return exp_lst
