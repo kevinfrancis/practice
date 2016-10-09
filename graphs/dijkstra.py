@@ -37,8 +37,16 @@ def dijkstra(g, s, f):
                         q[i] = (dist[v_adj], v_adj)
                 heapq.heapify(q)
 
-    print(dist)
-        
+    path = []
+    v = f
+    while v is not None:
+        path.append(v)
+        v = prev[v]
+
+    print('dist = ' + str(dist))
+    print('prev = ' + str(prev))
+    print('path = ' + str(path))
+
 
 class UndirectedGraph:
     def __init__(self):
