@@ -10,17 +10,11 @@ def longest_palindrome(s):
     # return start index and palindrome
     def longest_at(i):
         (l, r) = (i//2, (i+1)//2)
-        if s[l] != s[r]:
-            return (l, 0)
 
-        while True:
-            (next_l, next_r) = (l-1, r+1)
+        while l >= 0 and r < n and s[l] == s[r]:
+            (l, r) = (l-1, r+1)
 
-            if next_l < 0 or next_r >= n or s[next_l] != s[next_r]:
-                break
-
-            (l, r) = (next_l, next_r)
-
+        (l, r) = (l+1, r-1) # adjust for overstep
         return (l, r-l+1)
 
     longest_start = -1
@@ -34,6 +28,9 @@ def longest_palindrome(s):
     return (longest_start, longest_length)
 
 def main():
+    if len(sys.argv) == 1:
+        print('insufficient args')
+        sys.exit(0)
     s = sys.argv[1]
     (i, length) = longest_palindrome(s)
     print('longest_start=%s, longest_length=%d' % (i, length))
